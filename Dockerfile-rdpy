@@ -1,0 +1,14 @@
+FROM debian:10
+
+RUN apt-get update && apt-get install python-qt4 python-pip git -y && git clone https://github.com/citronneur/rdpy.git rdpy && \
+ pip install twisted pyopenssl qt4reactor service_identity rsa==4.0 pyasn1
+
+WORKDIR /rdpy
+
+RUN python setup.py install
+
+COPY win7.rss .
+
+EXPOSE 3389
+
+ENTRYPOINT ["rdpy-rdphoneypot.py","-L", "rdpy-honey.log","win7.rss"]

@@ -1,0 +1,29 @@
+version: '2.2'
+
+services:
+  rdpy:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-rdpy
+    image: rdpy
+    ports:
+      - '3389:3389'
+
+  vnc:
+    restart: always
+    image: amazedostrich/vnclowpot
+    ports:
+      - '5900:5900'
+
+  ssh:
+    restart: always
+    image: cowrie
+    ports:
+      - '22:2222'
+      - '23:2223'
+    environment:
+      - 'COWRIE_TELNET_ENABLED=yes'
+
+
+
